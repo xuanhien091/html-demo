@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>S#</title>
+    <link rel="stylesheet" href="bem.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+</head>
+
+<body>
+    <!-- <div>
+        <button href="" class="btn btn--success btn--disabled">GO TO NEXT APPROVAL</button>
+        <button href="" class="btn btn--warn">OK</button>
+        <button href="" class="btn btn--danger">TRY AGAIN</button>
+    </div>
+    <br/> -->
+    <div>
+        <button onclick="showSuccess()" class="btn btn--size-l btn--success">申請</button>
+        <button onclick="showWarning()" class="btn btn--size-m btn--warn">報告</button>
+        <button onclick="showError()" class="btn btn--size-s btn--danger">エラー</button>
+        <button onclick="showDanger()" class="btn btn--size-s btn--danger">Danger</button>
+    </div>
+    <!--BEM-->
+    <br/>
+    <br/>
+    <!--SUCCESS-->
+    <div id="toast">
+        <!-- <div class="toast toast--success">
+            <div class="toast__icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">成功</h3>
+                <p class="toast__msg">しばらくお待ちください。しばらくお待ちください。</p>
+            </div>
+            <div class="toast__close">
+                <i class="fas fa-times"></i>
+            </div>
+        </div> -->
+    </div>
+    <div>
+
+    </div>
+    <!-- INFO -->
+    <!-- <div class="toast toast--info">
+        <div class="toast__icon">
+            <i class="fas fa-info-circle"></i>
+        </div>
+        <div class="toast__body">
+            <h3 class="toast__title">成功</h3>
+            <p class="toast__msg">しばらくお待ちください。</p>
+        </div>
+        <div class="toast__close">
+            <i class="fas fa-times"></i>
+        </div>
+    </div> -->
+    <!--WARNING-->
+    <!-- <div class="toast toast--warning">
+        <div class="toast__icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="toast__body">
+            <h3 class="toast__title">成功</h3>
+            <p class="toast__msg">しばらくお待ちください。しばらくお待ちください。</p>
+        </div>
+        <div class="toast__close">
+            <i class="fas fa-times"></i>
+        </div>
+    </div> -->
+    <!--ERROR-->
+    <!-- <div class="toast toast--error">
+        <div class="toast__icon">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <div class="toast__body">
+            <h3 class="toast__title">成功</h3>
+            <p class="toast__msg">しばらくお待ちください。しばらくお待ちください。</p>
+        </div>
+        <div class="toast__close">
+            <i class="fas fa-times"></i>
+        </div>
+    </div> -->
+</body>
+<script>
+    function toast({
+        title = '',
+        message = '',
+        type = 'warning',
+        duration = 3000
+    }) {
+        const main = document.getElementById('toast');
+        if (main) {
+            const toast = document.createElement('div');
+            // auto remove
+            const autoRemoveId = setTimeout(function() {
+                main.removeChild(toast);
+            }, duration + 1000)
+
+            toast.onclick = function(e) {
+                if (e.target.closest('.toast__close')) {
+                    main.removeChild(toast);
+                    clearTimeout(autoRemoveId);
+                }
+            }
+            const icons = {
+                success: 'fa-check-circle',
+                info: 'fa-info-circle',
+                warning: 'fa-exclamation-triangle',
+                error: 'fa-exclamation-circle'
+            }
+            const icon = icons[type];
+            const delay = (duration / 1000).toFixed(2);
+            toast.classList.add('toast', `toast--${type}`);
+            toast.style.animation = `slideInLeft ease 0.3s, fadeOut linear 0.5s ${delay}s forwards`;
+            toast.innerHTML = `
+            <div class="toast__icon">
+                <i class="fas ${icon}"></i>
+            </div>
+            <div class="toast__body">
+                <h3 class="toast__title">${title}</h3>
+                <p class="toast__msg">${message}</p>
+            </div>
+            <div class="toast__close">
+                <i class="fas fa-times"></i>
+            </div>`;
+            main.appendChild(toast);
+        }
+
+
+    }
+
+    function showSuccess() {
+        toast({
+            title: '申請状態',
+            message: 'ABCD',
+            type: 'success',
+            duration: 4000,
+        });
+    }
+
+    function showWarning() {
+        toast({
+            title: '申請状態',
+            message: 'ABCD',
+            type: 'info',
+            duration: 4000,
+        });
+    }
+
+    function showError() {
+        toast({
+            title: '申請状態',
+            message: 'ABCD',
+            type: 'warning',
+            duration: 2000,
+        });
+    }
+
+    function showDanger() {
+        toast({
+            title: '申請状態',
+            message: 'ABCD',
+            type: 'error',
+            duration: 4000,
+        });
+    }
+</script>
+
+</html>
